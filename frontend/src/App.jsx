@@ -16,8 +16,11 @@ function AppLayout({ children }) {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navbar />
-      <main className="md:ml-64 pt-16 md:pt-0 pb-20 md:pb-8 px-4 md:px-8 py-6">
-        {children}
+      {/* Conflicting 'py-6' hataya aur exact space allocate ki */}
+      <main className="md:ml-64 px-4 md:px-8 pt-24 pb-24 md:pt-10 md:pb-10 min-h-screen">
+        <div className="max-w-7xl mx-auto w-full">
+          {children}
+        </div>
       </main>
     </div>
   )

@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { Wallet, TrendingUp, PieChart, Shield } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { GoogleLogin } from '@react-oauth/google'
-import { supabase } from '../api/supabase' // DHYAN DEIN: Agar supabase.js ka folder path alag hai, toh isko update kar lena
+import { supabase } from '../api/supabase'
 
 const Login = () => {
   const { user } = useAuth()
@@ -20,7 +20,6 @@ const Login = () => {
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
       setLoading(true)
-      // Google se token liya aur silently Supabase ko de diya
       const { data, error } = await supabase.auth.signInWithIdToken({
         provider: 'google',
         token: credentialResponse.credential,
@@ -46,11 +45,11 @@ const Login = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 flex items-center justify-center p-4">
-      <div className="max-w-4xl w-full grid md:grid-cols-2 gap-8 items-center">
+    <div className="min-h-screen bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 flex items-center justify-center p-4 py-10">
+      <div className="max-w-4xl w-full flex flex-col md:grid md:grid-cols-2 gap-10 items-center">
         
-        {/* Left Side - Branding (Aapka original mast UI) */}
-        <div className="text-white space-y-6 text-center md:text-left">
+        {/* Left Side - Branding (Ab yeh mobile par pehle / upar aayega) */}
+        <div className="text-white space-y-6 text-center md:text-left mt-6 md:mt-0">
           <div className="flex items-center justify-center md:justify-start gap-3">
             <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
               <span className="text-3xl">💰</span>
@@ -58,11 +57,11 @@ const Login = () => {
             <h1 className="text-4xl font-bold">ExpenseEase</h1>
           </div>
           
-          <p className="text-xl text-primary-100">
+          <p className="text-xl text-primary-100 px-4 md:px-0">
             Your personal expense tracker that helps you understand where your money goes.
           </p>
 
-          <div className="grid grid-cols-2 gap-4 pt-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-4">
             {features.map((feature, index) => (
               <div 
                 key={index}
@@ -70,25 +69,24 @@ const Login = () => {
               >
                 <feature.icon className="w-8 h-8 mx-auto mb-2 text-primary-200" />
                 <h3 className="font-semibold text-sm">{feature.title}</h3>
-                <p className="text-xs text-primary-200 mt-1">{feature.desc}</p>
+                <p className="text-xs text-primary-200 mt-1 hidden sm:block">{feature.desc}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Right Side - Login Card */}
-        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 space-y-6">
+        {/* Right Side - Login Card (Ab yeh mobile par neeche aayega) */}
+        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6 w-full max-w-md mx-auto">
           <div className="text-center space-y-2">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
               Welcome Back! 👋
             </h2>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">
               Sign in to continue tracking your expenses
             </p>
           </div>
 
-          {/* Yahan aapka naya Google Popup Button hai, jo chode width mein aayega */}
-          <div className="w-full flex justify-center items-center py-2 opacity-100 transition-opacity duration-300">
+          <div className="w-full flex justify-center items-center py-2 opacity-100 transition-opacity duration-300 overflow-hidden">
             {loading ? (
               <p className="text-primary-600 font-medium animate-pulse">Signing in securely...</p>
             ) : (
@@ -96,11 +94,11 @@ const Login = () => {
                 onSuccess={handleGoogleSuccess}
                 onError={() => toast.error('Google Popup closed or failed')}
                 useOneTap={true}
-                theme="outline"        // Clean white outline style
-                size="large"           // Bada aur prominent button
-                shape="rectangular"    // Modern square edges
-                text="continue_with"   // Text: Continue with Google
-                width="350"            // Isse button full width (lamba) dikhega aapke layout mein
+                theme="outline"
+                size="large"
+                shape="rectangular"
+                text="continue_with"
+                width="300" 
               />
             )}
           </div>
